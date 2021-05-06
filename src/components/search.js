@@ -1,12 +1,26 @@
 import * as React from "react"
+import axios from "axios"
 
-const Search = () => {
+const Search = (props) => {
   const [searchValue, setSearchValue] = React.useState("");
+  
   const handleChange = (event) => {
     setSearchValue(event.target.value)
   }
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    getWeatherForCurrentLoc(searchValue);
+  }
+
+  const getWeatherForCurrentLoc = async (searchValue) => {
+    try {
+      const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&appid=08bb2048fcabafff1dc7b2a8d93668ef`)
+      props.parentCallback(response.data)
+    } 
+    catch (error) {
+      console.log(error)
+    }
   }
   return (
     <div>

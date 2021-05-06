@@ -1,10 +1,16 @@
 import * as React from "react"
 import Search from "../components/search.js";
+import Display from "../components/display.js";
 
 const pageStyles = {
   color: "#232129",
   padding: 96,
   fontFamily: "-apple-system, Roboto, sans-serif, serif",
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  justifyContent: "flex-start"
+
 }
 const headingStyles = {
   marginTop: 0,
@@ -24,16 +30,27 @@ const linkStyle = {
   verticalAlign: "5%",
 }
 
+
 const IndexPage = () => {
+  const [weatherData, setWeatherData] = React.useState({});
+  
+  const handleWeatherData = (data) => {
+    setWeatherData(data)
+  }
   return (
     <main style={pageStyles}>
-      <title>Home Page</title>
-      <h1 style={headingStyles}>
-        Weather. Simple.
-        <br />
-        <span style={headingAccentStyles}>Just enter your location and discover the weather conditions for your current location.</span>
-      </h1>
-      <Search />
+      <div>
+        <title>Home Page</title>
+        <h1 style={headingStyles}>
+          Weather. Simple.
+          <br />
+          <span style={headingAccentStyles}>Just enter your location and discover the weather conditions for your current location.</span>
+        </h1>
+        <Search parentCallback={handleWeatherData}/>
+      </div>
+      <div>
+        <Display weatherData={weatherData} />
+      </div>
     </main>
   )
 }
